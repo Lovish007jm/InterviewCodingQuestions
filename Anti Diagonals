@@ -1,0 +1,93 @@
+/* 
+Problem Description
+
+Give a N*N square matrix, return an array of its anti-diagonals. Look at the example for more details.
+Example:
+
+Input:
+
+1 2 3
+4 5 6
+7 8 9
+Return the following:
+[ 
+  [1],
+  [2, 4],
+  [3, 5, 7],
+  [6, 8],
+  [9]
+]
+
+
+Input: 
+1 2
+3 4
+Return the following: 
+[
+  [1],
+  [2, 3],
+  [4]
+]
+*/
+
+/* *******SOLUTION ********/
+
+public class Solution {
+    public int[][] diagonal(int[][] A) {
+       
+        /*
+            leftColumn
+              |
+              +
+        	| 0	| 1	| 2
+        -----------------
+        0	| 1 | 2 | 3 |       <-----topRow
+        ----------------- 
+        1	| 4 | 5 | 6 |
+        ----------------- 
+        2	| 7 | 8 | 9 |
+        ----------------- 
+        
+        */
+         int n  = A.length;
+        int res[][] = new int[(2*n-1)][];
+        int resultIndex=0;
+        
+        int leftColumn = 0;
+        int topRow = 0;
+        while(topRow < n )
+        {
+            //topRow will be changed only when we reached end in the first row
+            //ie. leftColumn becomes n-1 here 2
+                int startRow = topRow;
+                int startColumn = leftColumn;
+                int noOfElementsInInnerArray = (startColumn+1)-topRow;
+                res[resultIndex] = new int[noOfElementsInInnerArray];
+                int innerArrayIndex = 0;
+                while(startRow<n && startColumn>=0){
+                    res[resultIndex][innerArrayIndex]=A[startRow][startColumn];
+                    startRow++;
+                    startColumn--;
+                    innerArrayIndex++;
+                }
+
+                //Since after the leftcolum reach end we shoul not increement
+                //as it should be remain at the last column
+                //Also we should move to the next row(topRow+1) so that we can pick the last element in next row
+                if(leftColumn>=n||leftColumn==n-1){
+                     leftColumn = n-1;
+                     topRow++;
+                     
+                }
+                else{
+                   leftColumn++;
+
+                }
+                resultIndex++;
+
+            }
+        
+        return res;        
+
+    }
+}
