@@ -1,0 +1,86 @@
+/* Given a matrix of m * n elements (m rows, n columns), return all elements of the matrix in spiral order.
+
+Example:
+
+Given the following matrix:
+
+[
+    [ 1, 2, 3 ],
+    [ 4, 5, 6 ],
+    [ 7, 8, 9 ]
+]
+You should return
+
+[1, 2, 3, 6, 9, 8, 7, 4, 5] */
+
+/**********SOLUTION***********/
+
+public class Solution {
+    
+    enum Direction{
+        RIGHT,LEFT,DOWN,UP
+    }
+
+    public int[] spiralOrder(final int[][] A) {
+    
+    int m = A.length;//rows
+    int n = A[0].length;//columns
+    Direction dir = Direction.RIGHT;
+    int topRow = 0;
+    int bottomRow = m-1;
+    int leftColumn = 0;
+    int rightColumn = n-1;
+    
+    int res[] = new int[m*n];
+    int k = 0;
+    while(topRow<=bottomRow && leftColumn<=rightColumn){
+
+            if(dir.equals(Direction.RIGHT)){
+
+                for(int j = leftColumn;j<=rightColumn;j++){
+                    res[k] = A[topRow][j];
+                    k++;
+                }
+                topRow++;
+                dir= Direction.DOWN;
+
+            }
+            else if(dir.equals(Direction.DOWN)){
+
+                for(int j = topRow;j<=bottomRow;j++){
+                    res[k] = A[j][rightColumn];
+                    k++;
+                }
+                rightColumn--;
+                dir= Direction.LEFT;
+
+            }else if(dir.equals(Direction.LEFT)){
+
+                for(int j = rightColumn;j>=leftColumn;j--){
+                    res[k] = A[bottomRow][j];
+                    k++;
+                }
+                bottomRow--;
+                dir= Direction.UP;
+
+            }else if(dir.equals(Direction.UP)){
+
+                for(int j = bottomRow;j>=topRow;j--){
+                    res[k] = A[j][leftColumn];
+                    k++;
+                }
+                leftColumn++;
+                dir= Direction.RIGHT;
+
+            }
+
+
+    }
+
+        return res;
+     
+
+    }
+
+
+}
